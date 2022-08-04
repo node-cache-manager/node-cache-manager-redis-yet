@@ -1,33 +1,33 @@
 lockfileVersion: 5.4
 
 specifiers:
-  '@commitlint/cli': ^17.0.3
-  '@commitlint/config-conventional': ^17.0.3
+  '@commitlint/cli': 17.0.3
+  '@commitlint/config-conventional': 17.0.3
   '@redis/bloom': ^1.0.2
   '@redis/client': ^1.2.0
   '@redis/graph': ^1.0.1
   '@redis/json': ^1.0.3
   '@redis/search': ^1.0.6
   '@redis/time-series': ^1.0.3
-  '@release-it/conventional-changelog': ^5.0.0
-  '@types/cache-manager': ^4.0.1
-  '@types/node': ^18.6.3
-  '@typescript-eslint/eslint-plugin': ^5.32.0
-  '@typescript-eslint/parser': ^5.32.0
-  cache-manager: ^4.1.0
-  dotenv-cli: ^6.0.0
-  eslint: ^8.21.0
-  eslint-config-prettier: ^8.5.0
-  eslint-plugin-prettier: ^4.2.1
-  husky: ^8.0.1
-  lint-staged: ^13.0.3
-  prettier: ^2.7.1
-  prettier-plugin-prisma: ^4.1.0
-  prisma: ^4.1.1
+  '@release-it/conventional-changelog': 5.0.0
+  '@types/cache-manager': 4.0.1
+  '@types/node': 18.6.3
+  '@typescript-eslint/eslint-plugin': 5.32.0
+  '@typescript-eslint/parser': 5.32.0
+  cache-manager: 4.1.0
+  dotenv-cli: 6.0.0
+  eslint: 8.21.0
+  eslint-config-prettier: 8.5.0
+  eslint-plugin-prettier: 4.2.1
+  husky: 8.0.1
+  lint-staged: 13.0.3
+  prettier: 2.7.1
+  prettier-plugin-prisma: 4.1.0
+  prisma: 4.1.1
   redis: ^4.2.0
-  release-it: ^15.2.0
-  typescript: ^4.7.4
-  vitest: ^0.20.3
+  release-it: 15.2.0
+  typescript: 4.7.4
+  vitest: 0.20.3
 
 dependencies:
   '@redis/bloom': 1.0.2_@redis+client@1.2.0
@@ -1237,7 +1237,7 @@ packages:
     dev: true
 
   /concat-map/0.0.1:
-    resolution: {integrity: sha1-2Klr13/Wjfd5OnMDajug1UBdR3s=}
+    resolution: {integrity: sha512-/Srv4dswyQNBfohGpz9o6Yb3Gz3SrUDqBH5rTuhGR7ahtlbYKnVxw2bCFMRljaA7EXHaXZ8wsHdodFvbkhKmqg==}
     dev: true
 
   /concat-stream/2.0.0:
@@ -5018,7 +5018,7 @@ packages:
     dev: true
 
   /xregexp/2.0.0:
-    resolution: {integrity: sha1-UqY+VsoLhKfzpfPWGHLxJq16WUM=}
+    resolution: {integrity: sha512-xl/50/Cf32VsGq/1R8jJE5ajH1yMCQkpmoS10QbFZWl2Oor4H0Me64Pu2yxvsRWK3m6soJbmGfzSR7BYmDcWAA==}
     dev: true
 
   /xtend/4.0.2:

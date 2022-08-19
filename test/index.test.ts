@@ -17,6 +17,7 @@ beforeEach(async () => {
     ...config,
   }) as RedisCache;
 
+  await redisCache.reset();
   const conf = {
     ...config,
     isCacheableValue: (val: unknown) => {
@@ -34,6 +35,8 @@ beforeEach(async () => {
     store: await redisStore(conf),
     ...conf,
   }) as RedisCache;
+
+  await customRedisCache.reset();
 });
 
 describe('instance', () => {

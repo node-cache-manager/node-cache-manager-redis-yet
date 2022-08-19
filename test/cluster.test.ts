@@ -32,6 +32,7 @@ beforeEach(async () => {
     ...config,
   }) as RedisCache<RedisClusterType>;
 
+  await redisCache.reset();
   const conf = {
     ...config,
     isCacheableValue: (val: unknown) => {
@@ -49,6 +50,8 @@ beforeEach(async () => {
     store: await redisClusterStore(conf),
     ...conf,
   }) as RedisCache<RedisClusterType>;
+
+  await customRedisCache.reset();
 });
 
 describe('set', () => {

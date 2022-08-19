@@ -70,7 +70,7 @@
     "vitest": "0.22.1"
   },
   "engines": {
-    "node": ">= 14.20.0"
+    "node": ">= 16.17.0"
   },
   "lint-staged": {
     "*.{ts,js}": "eslint --cache --fix",

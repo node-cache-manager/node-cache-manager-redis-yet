@@ -9,20 +9,9 @@ let customRedisCache: RedisCache<RedisClusterType>;
 // TODO: https://github.com/redis/node-redis/issues/2213
 const config: RedisClusterOptions & { ttl: number } = {
   rootNodes: [
-    { url: 'redis://redis-c0:6380' },
-    { url: 'redis://redis-c1:6381' },
+    { url: 'redis://redis-c0:6379' },
+    { url: 'redis://redis-c1:6379' },
   ],
-
-  nodeAddressMap: {
-    '127.0.0.1:6380': {
-      host: 'redis-c0',
-      port: 6380,
-    },
-    '127.0.0.1:6381': {
-      host: 'redis-c1',
-      port: 6381,
-    },
-  },
   ttl: 0,
 };
 

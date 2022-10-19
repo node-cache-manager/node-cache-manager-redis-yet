@@ -35,7 +35,7 @@ dependencies:
   '@redis/json': 1.0.4_@redis+client@1.3.0
   '@redis/search': 1.1.0_@redis+client@1.3.0
   '@redis/time-series': 1.0.3_@redis+client@1.3.0
-  cache-manager: 5.1.0
+  cache-manager: 5.1.1
   redis: 4.3.1
 
 devDependencies:
@@ -1052,8 +1052,8 @@ packages:
       yargs-parser: 20.2.9
     dev: true
 
-  /cache-manager/5.1.0:
-    resolution: {integrity: sha512-Ui6x3fZ48Qw/C26f5N835uiaNNbBEN889PwoEDaPq3OYw15F28q1ZTv9tX/MxcqHM0xzDkh4smvdGdYyCTkYiA==}
+  /cache-manager/5.1.1:
+    resolution: {integrity: sha512-xvbv24xOimcGNIna+LOoX0IV8ng6JrEhocYOpfaxPRx4fzyB9B91WYTj/kHcgt8ZPuDq8nt3T9XFh6NlWtA2Ew==}
     dependencies:
       lodash.clonedeep: 4.5.0
       lru-cache: 7.14.0

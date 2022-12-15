@@ -55,17 +55,17 @@ function builder<T extends Clients>(
       if (!isCacheable(value))
         throw new Error(`"${value}" is not a cacheable value`);
       const t = ttl === undefined ? options?.ttl : ttl;
-      if (t) await redisCache.setEx(key, t, getVal(value));
-      else await redisCache.set(key, getVal(value));
+      const ttlOptions = t !== undefined ? { PX: t } : undefined;
+      await redisCache.set(key, getVal(value), ttlOptions);
     },
     async mset(args, ttl) {
       const t = ttl === undefined ? options?.ttl : ttl;
-      if (t) {
+      if (t !== undefined) {
         const multi = redisCache.multi();
         for (const [key, value] of args) {
           if (!isCacheable(value))
             throw new Error(`"${getVal(value)}" is not a cacheable value`);
-          multi.setEx(key, t, getVal(value));
+          multi.set(key, getVal(value), { PX: t });
         }
         await multi.exec();
       } else
@@ -93,7 +93,7 @@ function builder<T extends Clients>(
     async del(key) {
       await redisCache.del(key);
     },
-    ttl: async (key) => redisCache.ttl(key),
+    ttl: async (key) => redisCache.pTTL(key),
     keys: (pattern = '*') => keys(pattern),
     reset,
     isCacheable,

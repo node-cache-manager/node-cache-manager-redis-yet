@@ -8,8 +8,7 @@ let customRedisCache: RedisCache;
 
 const config = {
   url: 'redis://localhost:6379',
-  ttl: 0,
-};
+} as const;
 
 beforeEach(async () => {
   redisCache = await cacheManager.caching(redisStore, config);
@@ -47,27 +46,19 @@ describe('instance', () => {
 });
 
 describe('set', () => {
-  it('should store a value without ttl', () =>
-    expect(redisCache.set('foo', 'bar')).resolves.toBeUndefined());
+  it('should store a value without ttl', async () => {
+    await expect(redisCache.set('foo', 'bar')).resolves.toBeUndefined();
+    await expect(redisCache.get('foo')).resolves.toBe('bar');
+  });
 
-  it('should store a value with a specific ttl', () =>
-    expect(redisCache.set('foo', 'bar', config.ttl)).resolves.toBeUndefined());
-
-  it('should store a value with a infinite ttl', () =>
-    expect(redisCache.set('foo', 'bar', 0)).resolves.toBeUndefined());
+  it('should store a value with a specific ttl', async () => {
+    await expect(redisCache.set('foo', 'bar', 1)).resolves.toBeUndefined();
+    await new Promise((resolve) => setTimeout(resolve, 2));
+    await expect(redisCache.get('foo')).resolves.toBeUndefined();
+  });
 
   it('should not be able to store a null value (not cacheable)', () =>
     expect(redisCache.set('foo2', null)).rejects.toBeDefined());
-
-  it('should store a value without callback', async () => {
-    const value = 'baz';
-    await redisCache.set('foo', value);
-    await expect(redisCache.get('foo')).resolves.toEqual(value);
-
-    const v = 0;
-    await redisCache.set('foo', v);
-    await expect(redisCache.get('foo')).resolves.toEqual(v);
-  });
 
   it('should not store an invalid value', () =>
     expect(redisCache.set('foo1', undefined)).rejects.toStrictEqual(
@@ -93,29 +84,28 @@ describe('set', () => {
 });
 
 describe('mset', () => {
-  it('should store a value without ttl', () =>
-    redisCache.store.mset([
-      ['foo', 'bar'],
-      ['foo2', 'bar2'],
-    ]));
+  it('should store a value with a specific ttl', async () => {
+    await redisCache.store.mset(
+      [
+        ['foo', 'bar'],
+        ['foo2', 'bar2'],
+      ],
+      1000,
+    );
+    await expect(redisCache.store.mget('foo', 'foo2')).resolves.toStrictEqual([
+      'bar',
+      'bar2',
+    ]);
+  });
 
-  it(
-    'should store a value with a specific ttl',
-    () =>
-      redisCache.store.mset(
-        [
-          ['foo', 'bar'],
-          ['foo2', 'bar2'],
-        ],
-        60,
-      ),
-    100000,
-  );
-
-  it('should store a value with a infinite ttl', async () => {
+  it('should store a value with a no ttl', async () => {
     await redisCache.store.mset([
       ['foo', 'bar'],
       ['foo2', 'bar2'],
+    ]);
+    await expect(redisCache.store.mget('foo', 'foo2')).resolves.toStrictEqual([
+      'bar',
+      'bar2',
     ]);
     await expect(redisCache.store.ttl('foo')).resolves.toEqual(-1);
   });
@@ -123,7 +113,7 @@ describe('mset', () => {
   it('should not be able to store a null value (not cacheable)', () =>
     expect(redisCache.store.mset([['foo2', null]])).rejects.toBeDefined());
 
-  it('should store a value without callback', async () => {
+  it('should store a value without ttl', async () => {
     await redisCache.store.mset([
       ['foo', 'baz'],
       ['foo2', 'baz2'],
@@ -216,9 +206,11 @@ describe('reset', () => {
 
 describe('ttl', () => {
   it('should retrieve ttl for a given key', async () => {
-    const ttl = 100;
+    const ttl = 1000;
     await redisCache.set('foo', 'bar', ttl);
-    await expect(redisCache.store.ttl('foo')).resolves.toEqual(ttl);
+    await expect(redisCache.store.ttl('foo')).resolves.toBeGreaterThanOrEqual(
+      ttl - 10,
+    );
 
     await redisCache.set('foo', 'bar', 0);
     await expect(redisCache.store.ttl('foo')).resolves.toEqual(-1);

@@ -6,7 +6,7 @@ All notable changes to this project will be documented in this file. Dates are d
 
 > 16 December 2022
 
-- fix: ttl should be in milliseconds [#110](https://github.com/node-cache-manager/node-cache-manager-redis-yet/pull/110) - @vonovak 
+- fix: ttl should be in milliseconds [#110](https://github.com/node-cache-manager/node-cache-manager-redis-yet/pull/110) - @vonovak
 
 #### [4.0.0](https://github.com/botika/node-cache-manager-redis-yet/compare/3.2.0...4.0.0)
 

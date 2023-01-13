@@ -33,6 +33,19 @@ export interface RedisStore<T extends Clients = RedisClientType> extends Store {
   get client(): T;
 }
 
+export class NoCacheableError implements Error {
+  name = 'NoCacheableError';
+  constructor(public message: string) {}
+}
+
+export const avoidNoCacheable = async <T>(p: Promise<T>) => {
+  try {
+    return await p;
+  } catch (e) {
+    if (!(e instanceof NoCacheableError)) throw e;
+  }
+};
+
 const getVal = (value: unknown) => JSON.stringify(value) || '"undefined"';
 
 function builder<T extends Clients>(
@@ -53,7 +66,7 @@ function builder<T extends Clients>(
     },
     async set(key, value, ttl) {
       if (!isCacheable(value))
-        throw new Error(`"${value}" is not a cacheable value`);
+        throw new NoCacheableError(`"${value}" is not a cacheable value`);
       const t = ttl === undefined ? options?.ttl : ttl;
       const ttlOptions = t !== undefined ? { PX: t } : undefined;
       await redisCache.set(key, getVal(value), ttlOptions);
@@ -64,7 +77,9 @@ function builder<T extends Clients>(
         const multi = redisCache.multi();
         for (const [key, value] of args) {
           if (!isCacheable(value))
-            throw new Error(`"${getVal(value)}" is not a cacheable value`);
+            throw new NoCacheableError(
+              `"${getVal(value)}" is not a cacheable value`,
+            );
           multi.set(key, getVal(value), { PX: t });
         }
         await multi.exec();

@@ -119,10 +119,15 @@ function builder<T extends Clients>(
   } as RedisStore<T>;
 }
 
-// TODO: past instance as option
 export async function redisStore(options?: RedisClientOptions & Config) {
   const redisCache = createClient(options);
+  const promise = new Promise((resolve, reject) => {
+    redisCache.on('connect', resolve);
+    redisCache.on('error', reject);
+  });
+
   await redisCache.connect();
+  await promise;
 
   return redisInsStore(redisCache as RedisClientType, options);
 }
@@ -142,7 +147,13 @@ export function redisInsStore(redisCache: RedisClientType, options?: Config) {
 // TODO: coverage
 export async function redisClusterStore(options: RedisClusterOptions & Config) {
   const redisCache = createCluster(options);
+  const promise = new Promise((resolve, reject) => {
+    redisCache.on('connect', resolve);
+    redisCache.on('error', reject);
+  });
+
   await redisCache.connect();
+  await promise;
 
   return redisClusterInsStore(redisCache, options);
 }

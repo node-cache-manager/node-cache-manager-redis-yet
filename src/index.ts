@@ -72,7 +72,7 @@ function builder<T extends Clients>(
       await redisCache.set(key, getVal(value), ttlOptions);
     },
     async mset(args, ttl) {
-      const t = ttl === undefined || ttl === 0 ? options?.ttl : ttl;
+      const t = ttl === undefined ? options?.ttl : ttl;
       if (t !== undefined) {
         const multi = redisCache.multi();
         for (const [key, value] of args) {
@@ -80,7 +80,8 @@ function builder<T extends Clients>(
             throw new NoCacheableError(
               `"${getVal(value)}" is not a cacheable value`,
             );
-          multi.set(key, getVal(value), { PX: t });
+          const ttlOptions = t !== 0 ? { PX: t } : undefined;
+          multi.set(key, getVal(value), ttlOptions);
         }
         await multi.exec();
       } else

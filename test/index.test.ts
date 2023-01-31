@@ -61,6 +61,7 @@ describe('set', () => {
   it('should store a value with a ttl of zero', async () => {
     await expect(redisCache.set('foo', 'bar', 0)).resolves.toBeUndefined();
     await expect(redisCache.get('foo')).resolves.toBe('bar');
+    await expect(redisCache.store.ttl('foo')).resolves.toEqual(-1);
   });
 
   it('should store a value with a specific ttl', async () => {
@@ -122,6 +123,8 @@ describe('mset', () => {
       'bar',
       'bar2',
     ]);
+    await expect(redisCache.store.ttl('foo')).resolves.toEqual(-1);
+    await expect(redisCache.store.ttl('foo2')).resolves.toEqual(-1);
   });
 
   it('should store a value with a no ttl', async () => {

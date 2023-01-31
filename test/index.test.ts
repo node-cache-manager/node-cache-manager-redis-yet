@@ -57,6 +57,12 @@ describe('set', () => {
     await expect(redisCache.set('foo', 'bar')).resolves.toBeUndefined();
     await expect(redisCache.get('foo')).resolves.toBe('bar');
   });
+  
+  
+  it('should store a value with a ttl of zero', async () => {
+    await expect(redisCache.set('foo', 'bar', 0)).resolves.toBeUndefined();
+    await expect(redisCache.get('foo')).resolves.toBe('bar');
+  });
 
   it('should store a value with a specific ttl', async () => {
     await expect(redisCache.set('foo', 'bar', 1)).resolves.toBeUndefined();

@@ -72,7 +72,7 @@ function builder<T extends Clients>(
       await redisCache.set(key, getVal(value), ttlOptions);
     },
     async mset(args, ttl) {
-      const t = ttl === undefined ? options?.ttl : ttl;
+      const t = ttl === undefined || ttl === 0 ? options?.ttl : ttl;
       if (t !== undefined) {
         const multi = redisCache.multi();
         for (const [key, value] of args) {

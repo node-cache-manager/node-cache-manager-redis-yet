@@ -48,6 +48,9 @@ jobs:
       - name: test
         run: pnpm test -- --coverage
 
+      - name: build
+        run: pnpm build
+
       - name: Codecov
         uses: codecov/codecov-action@v3
         with:

@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. Dates are displayed in UTC.
 
+#### [4.0.2](https://github.com/botika/node-cache-manager-redis-yet/compare/4.0.1...4.0.2)
+
+> 02 February 2023
+
+- fix: set and mset ttl 0 as an argument
+- fix: redis breaking changes in uncovered cluster
+
 #### [4.0.1](https://github.com/botika/node-cache-manager-redis-yet/compare/4.0.0...4.0.1)
 
 > 16 December 2022

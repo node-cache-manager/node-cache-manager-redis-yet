@@ -10,6 +10,10 @@ import {
   avoidNoCacheable,
 } from '../src';
 
+const sleep = (timeout: number) =>
+  new Promise((resolve) => setTimeout(resolve, timeout));
+
+let redisCacheTtl: RedisCache;
 let redisCache: RedisCache;
 let customRedisCache: RedisCache;
 
@@ -17,8 +21,14 @@ const config = {
   url: 'redis://localhost:6379',
 } as const;
 
+const configTtl = {
+  ...config,
+  ttl: 500,
+} as const;
+
 beforeEach(async () => {
   redisCache = await cacheManager.caching(redisStore, config);
+  redisCacheTtl = await cacheManager.caching(redisStore, configTtl);
 
   await redisCache.reset();
   const conf = {
@@ -60,8 +70,22 @@ describe('set', () => {
 
   it('should store a value with a specific ttl', async () => {
     await expect(redisCache.set('foo', 'bar', 1)).resolves.toBeUndefined();
-    await new Promise((resolve) => setTimeout(resolve, 2));
+    await sleep(2);
     await expect(redisCache.get('foo')).resolves.toBeUndefined();
+  });
+
+  it('should store a value with a specific ttl from global', async () => {
+    await expect(redisCacheTtl.set('foo', 'bar')).resolves.toBeUndefined();
+    await sleep(2);
+    await expect(redisCacheTtl.get('foo')).resolves.toEqual('bar');
+    await sleep(configTtl.ttl);
+    await expect(redisCacheTtl.get('foo')).resolves.toBeUndefined();
+  });
+
+  it('should store a value with 0 ttl', async () => {
+    await expect(redisCacheTtl.set('foo', 'bar', 0)).resolves.toBeUndefined();
+    await sleep(configTtl.ttl + 1);
+    await expect(redisCacheTtl.get('foo')).resolves.toEqual('bar');
   });
 
   it('should not be able to store a null value (not cacheable)', () =>
@@ -103,6 +127,36 @@ describe('mset', () => {
       'bar',
       'bar2',
     ]);
+  });
+
+  it('should store a value with a specific ttl from global', async () => {
+    await redisCacheTtl.store.mset([
+      ['foo', 'bar'],
+      ['foo2', 'bar2'],
+    ]);
+    await expect(
+      redisCacheTtl.store.mget('foo', 'foo2'),
+    ).resolves.toStrictEqual(['bar', 'bar2']);
+
+    await sleep(configTtl.ttl);
+
+    await expect(
+      redisCacheTtl.store.mget('foo', 'foo2'),
+    ).resolves.toStrictEqual([undefined, undefined]);
+  });
+
+  it('should store a value with 0 ttl', async () => {
+    await redisCacheTtl.store.mset(
+      [
+        ['foo', 'bar'],
+        ['foo2', 'bar2'],
+      ],
+      0,
+    );
+    await sleep(configTtl.ttl);
+    await expect(
+      redisCacheTtl.store.mget('foo', 'foo2'),
+    ).resolves.toStrictEqual(['bar', 'bar2']);
   });
 
   it('should store a value with a no ttl', async () => {

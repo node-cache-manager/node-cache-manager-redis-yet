@@ -68,12 +68,13 @@ function builder<T extends Clients>(
       if (!isCacheable(value))
         throw new NoCacheableError(`"${value}" is not a cacheable value`);
       const t = ttl === undefined ? options?.ttl : ttl;
-      const ttlOptions = t !== undefined ? { PX: t } : undefined;
-      await redisCache.set(key, getVal(value), ttlOptions);
+      if (t !== undefined && t !== 0)
+        await redisCache.set(key, getVal(value), { PX: t });
+      else await redisCache.set(key, getVal(value));
     },
     async mset(args, ttl) {
       const t = ttl === undefined ? options?.ttl : ttl;
-      if (t !== undefined) {
+      if (t !== undefined && t !== 0) {
         const multi = redisCache.multi();
         for (const [key, value] of args) {
           if (!isCacheable(value))
@@ -157,14 +158,25 @@ export function redisClusterInsStore(
 ) {
   const reset = async () => {
     await Promise.all(
-      redisCache.getMasters().map((node) => node.client.flushDb()),
+      redisCache.getMasters().map(async (node) => {
+        if (node.client) {
+          const client = await node.client;
+          await client.flushDb();
+        }
+      }),
     );
   };
 
   const keys = async (pattern: string) =>
     (
       await Promise.all(
-        redisCache.getMasters().map((node) => node.client.keys(pattern)),
+        redisCache.getMasters().map(async (node) => {
+          if (node.client) {
+            const client = await node.client;
+            return await client.keys(pattern);
+          }
+          return [];
+        }),
       )
     ).flat();
 

@@ -1,4 +1,4 @@
-lockfileVersion: '6.1'
+lockfileVersion: '6.0'
 
 settings:
   autoInstallPeers: true
@@ -24,7 +24,7 @@ dependencies:
     specifier: ^1.0.4
     version: 1.0.4(@redis/client@1.5.8)
   cache-manager:
-    specifier: ^5.2.3
+    specifier: ^5.2.2
     version: 5.2.3
   redis:
     specifier: ^4.6.7

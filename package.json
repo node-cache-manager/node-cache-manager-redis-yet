@@ -45,7 +45,7 @@
     "@redis/json": "^1.0.4",
     "@redis/search": "^1.1.3",
     "@redis/time-series": "^1.0.4",
-    "cache-manager": "^5.2.3",
+    "cache-manager": "^5.2.2",
     "redis": "^4.6.7"
   },
   "devDependencies": {

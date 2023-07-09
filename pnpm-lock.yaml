@@ -38,8 +38,8 @@ devDependencies:
     specifier: 17.6.6
     version: 17.6.6
   '@release-it/conventional-changelog':
-    specifier: 6.0.0
-    version: 6.0.0(release-it@16.1.0)
+    specifier: 7.0.0
+    version: 7.0.0(release-it@16.1.0)
   '@types/node':
     specifier: 20.4.1
     version: 20.4.1
@@ -838,11 +838,11 @@ packages:
       '@redis/client': 1.5.8
     dev: false
 
-  /@release-it/conventional-changelog@6.0.0(release-it@16.1.0):
-    resolution: {integrity: sha512-OOiHhDncIFaNVfKJHpNQQkvM1yI5UPvyCtS74d6BDjvqWRu74J4cBGWh8b0owY4k3TTiR2BMKHn1eZ7hrxCnrA==}
-    engines: {node: '>=14'}
+  /@release-it/conventional-changelog@7.0.0(release-it@16.1.0):
+    resolution: {integrity: sha512-DBzyVS6c4g8w+xomCsygkmLeQBUq41Wvzy0vGgbdCLOxYnwI0cDaF6HOLPkrifH1qLa1uJ9i1pYA+hNyHkNanQ==}
+    engines: {node: '>=16'}
     peerDependencies:
-      release-it: ^15.4.1
+      release-it: ^16.0.0
     dependencies:
       concat-stream: 2.0.0
       conventional-changelog: 4.0.0

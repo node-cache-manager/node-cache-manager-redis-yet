@@ -49,8 +49,8 @@
     "redis": "^4.6.7"
   },
   "devDependencies": {
-    "@commitlint/cli": "17.6.7",
-    "@commitlint/config-conventional": "17.6.7",
+    "@commitlint/cli": "17.7.0",
+    "@commitlint/config-conventional": "17.7.0",
     "@release-it/conventional-changelog": "7.0.0",
     "@types/node": "20.4.9",
     "@typescript-eslint/eslint-plugin": "6.3.0",

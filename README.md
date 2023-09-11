@@ -26,7 +26,7 @@ const redis = await redisStore({
     tls: true,
   },
   password: 'secret',
-  ttl: 86400, // a day in seconds, can be overridden per cache
+  ttl: 86400 * 1000, // a day in milliseconds, can be overridden per cache
 });
 
 redis.set('foo', 'bar');

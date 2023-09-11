@@ -11,23 +11,25 @@ pnpm install cache-manager-redis-yet
 ```
 
 Or with npm:
+
 ```shell
 npm install cache-manager-redis-yet
 ```
 
 ## Usage
+
 ```ts
 const redis = await redisStore({
-    socket: {
-        host: 'example.com',
-        port: 3679,
-        tls: true,
-    },
-    password: 'secret',
-    ttl: 86400, // a day in seconds, can be overridden per cache
-})
+  socket: {
+    host: 'example.com',
+    port: 3679,
+    tls: true,
+  },
+  password: 'secret',
+  ttl: 86400, // a day in seconds, can be overridden per cache
+});
 
-redis.set('foo', 'bar')
+redis.set('foo', 'bar');
 ```
 
 ## License

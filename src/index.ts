@@ -109,6 +109,9 @@ function builder<T extends Clients>(
     async del(key) {
       await redisCache.del(key);
     },
+    sMembers: (key) => redisCache.sMembers(key),
+    sAdd: (key, members) => redisCache.sAdd(key, members),
+    sRemove: (key, members) => redisCache.sRem(key, members),
     ttl: async (key) => redisCache.pTTL(key),
     keys: (pattern = '*') => keys(pattern),
     reset,

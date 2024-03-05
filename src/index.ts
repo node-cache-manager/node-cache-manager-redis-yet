@@ -120,9 +120,23 @@ function builder<T extends Clients>(
   } as RedisStore<T>;
 }
 
-// TODO: past instance as option
-export async function redisStore(options?: RedisClientOptions & Config) {
+type RedisClient = ReturnType<typeof createClient>;
+export type RedisYetClientOptions = RedisClientOptions &
+  Config & {
+    /**
+     * @description beforeClientConnect hook, a callback that will be called before the client connects
+     * @default undefined
+     */
+    beforeClientConnect?: (client: RedisClient) => Promise<void> | void;
+  };
+
+export async function redisStore(options: RedisYetClientOptions) {
+  const { beforeClientConnect } = options;
   const redisCache = createClient(options);
+  if (beforeClientConnect) {
+    await beforeClientConnect(redisCache);
+  }
+
   await redisCache.connect();
 
   return redisInsStore(redisCache as RedisClientType, options);

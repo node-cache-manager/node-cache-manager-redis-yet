@@ -8,6 +8,10 @@
     {
       "name": "Juan Aguilar Santillana",
       "email": "mhpoin@gmail.com"
+    },
+    {
+      "name": "Jared Wray",
+      "email": "me@jaredwray.com"
     }
   ],
   "description": "Redis store for node-cache-manager updated",
@@ -27,16 +31,14 @@
   "scripts": {
     "build": "rm -rf dist && tsc -p tsconfig.build.json",
     "test:watch": "vitest test.ts",
-    "test": "pnpm test:watch --run",
-    "release": "pnpm check && pnpm test && pnpm build && dotenv release-it",
-    "fix": "pnpm lint && pnpm fmt",
-    "check": "pnpm lint:check && pnpm fmt:check",
+    "test": "vitest run --coverage",
+    "release": "npm run check && npm test && npm run build",
+    "fix": "npm run lint && npm run fmt",
+    "check": "npm run lint:check && npm run fmt:check",
     "lint": "eslint --cache --fix '**/*.{ts,js}'",
     "fmt": "prettier --write '**/*.{md,prisma,json}'",
     "lint:check": "eslint --cache --max-warnings 0 '**/*.{ts,js}'",
-    "fmt:check": "prettier --check '**/*.{md,json}'",
-    "commitlint": "commitlint",
-    "prepare": "husky install"
+    "fmt:check": "prettier --check '**/*.{md,json}'"
   },
   "dependencies": {
     "@redis/bloom": "^1.2.0",
@@ -49,9 +51,6 @@
     "redis": "^4.6.7"
   },
   "devDependencies": {
-    "@commitlint/cli": "17.7.1",
-    "@commitlint/config-conventional": "17.7.0",
-    "@release-it/conventional-changelog": "7.0.1",
     "@types/node": "20.5.9",
     "@typescript-eslint/eslint-plugin": "6.6.0",
     "@typescript-eslint/parser": "6.6.0",
@@ -61,10 +60,8 @@
     "eslint": "8.48.0",
     "eslint-config-prettier": "9.0.0",
     "eslint-plugin-prettier": "4.2.1",
-    "husky": "8.0.3",
     "lint-staged": "14.0.1",
     "prettier": "2.8.8",
-    "release-it": "16.1.5",
     "typescript": "5.2.2",
     "vitest": "0.34.3"
   },

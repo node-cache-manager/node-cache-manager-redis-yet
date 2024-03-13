@@ -9,3 +9,5 @@ package-lock.json
 .eslintcache
 
 *.log
+pnpm-lock.yaml
+yarn.lock

@@ -20,7 +20,8 @@
     "lint": "eslint --cache --fix '**/*.{ts,js}'",
     "fmt": "prettier --write '**/*.{md,prisma,json}'",
     "lint:check": "eslint --cache --max-warnings 0 '**/*.{ts,js}'",
-    "fmt:check": "prettier --check '**/*.{md,json}'"
+    "fmt:check": "prettier --check '**/*.{md,json}'",
+    "prepare": "npm run build"
   },
   "keywords": [
     "cache-manager",

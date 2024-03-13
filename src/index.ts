@@ -24,8 +24,8 @@ export type RedisCache<T extends Clients = RedisClientType> = Cache<
 type Name<T extends Clients> = T extends RedisClientType
   ? 'redis'
   : T extends RedisClusterType
-  ? 'redis-cluster'
-  : never;
+    ? 'redis-cluster'
+    : never;
 
 export interface RedisStore<T extends Clients = RedisClientType> extends Store {
   name: Name<T>;

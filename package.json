@@ -1,5 +1,32 @@
 {
   "name": "cache-manager-redis-yet",
+  "description": "Redis store for node-cache-manager updated",
+  "version": "4.1.2",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/node-cache-manager/node-cache-manager-redis-yet.git"
+  },
+  "scripts": {
+    "build": "rimraf dist && tsc -p tsconfig.build.json",
+    "clean": "rimraf dist node_modules yarn.lock package-lock.json pnpm-lock.yaml .eslintcache coverage",
+    "test:watch": "vitest test.ts",
+    "test": "vitest run --coverage",
+    "release": "npm run check && npm test && npm run build",
+    "fix": "npm run lint && npm run fmt",
+    "check": "npm run lint:check && npm run fmt:check",
+    "lint": "eslint --cache --fix '**/*.{ts,js}'",
+    "fmt": "prettier --write '**/*.{md,prisma,json}'",
+    "lint:check": "eslint --cache --max-warnings 0 '**/*.{ts,js}'",
+    "fmt:check": "prettier --check '**/*.{md,json}'"
+  },
+  "keywords": [
+    "cache-manager",
+    "redis",
+    "redis-cluster"
+  ],
   "authors": [
     {
       "name": "Matthijs Dabroek",
@@ -14,32 +41,6 @@
       "email": "me@jaredwray.com"
     }
   ],
-  "description": "Redis store for node-cache-manager updated",
-  "version": "4.1.2",
-  "license": "MIT",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/node-cache-manager/node-cache-manager-redis-yet.git"
-  },
-  "keywords": [
-    "cache-manager",
-    "redis",
-    "redis-cluster"
-  ],
-  "scripts": {
-    "build": "rm -rf dist && tsc -p tsconfig.build.json",
-    "test:watch": "vitest test.ts",
-    "test": "vitest run --coverage",
-    "release": "npm run check && npm test && npm run build",
-    "fix": "npm run lint && npm run fmt",
-    "check": "npm run lint:check && npm run fmt:check",
-    "lint": "eslint --cache --fix '**/*.{ts,js}'",
-    "fmt": "prettier --write '**/*.{md,prisma,json}'",
-    "lint:check": "eslint --cache --max-warnings 0 '**/*.{ts,js}'",
-    "fmt:check": "prettier --check '**/*.{md,json}'"
-  },
   "dependencies": {
     "@redis/bloom": "^1.2.0",
     "@redis/client": "^1.5.14",
@@ -61,6 +62,7 @@
     "eslint-plugin-prettier": "5.1.3",
     "lint-staged": "15.2.2",
     "prettier": "3.2.5",
+    "rimraf": "^5.0.5",
     "typescript": "5.4.2",
     "vitest": "1.3.1"
   },
